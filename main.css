@@ -20,7 +20,7 @@ body {
     display: flex;
     width: 960px;
     height: 960px;
-    border: 1px solid #333;
+    border: 1px transparent lightgrey;
 }
 
 .grid-block {
@@ -29,6 +29,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #333;
     
 }
 
@@ -36,4 +37,6 @@ body {
     background: orange;
 }
 
-.settings {}
+.settings {
+
+}
