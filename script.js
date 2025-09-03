@@ -2,9 +2,18 @@
 const grid = document.querySelector(".grid");
 const gridSize = document.querySelector("#size")
 const clearGrid = document.querySelector("#clear-grid")
-console.log(gridSize.value)
+const colorPicker = document.querySelector("#color-picker")
+
+let currentColor = colorPicker?.value;
 let mouseDown = false
 
+colorPicker?.addEventListener("input", () => {
+  currentColor = colorPicker.value; 
+});
+
+function colorPickerFunction(event) {
+  event.target.style.backgroundColor = currentColor;
+}
 
 function createGrid(gridCol) {
     const blockSize = (960 / gridCol) - 2;
@@ -21,12 +30,15 @@ function createGrid(gridCol) {
             gridDiv.style.width = `${blockSize}px`;
             gridDiv.style.height = `${blockSize}px`;
 
-            gridDiv.addEventListener("mousedown", (e) => {mouseDown = true})
-            gridDiv.addEventListener("mouseup", (e) => {mouseDown = false})
+            gridDiv.addEventListener("mousedown", (e) => 
+                { mouseDown = true
+                    colorPickerFunction(e);
+                 })
+            gridDiv.addEventListener("mouseup", (e) => { mouseDown = false })
             gridDiv.addEventListener("dragstart", (e) => e.preventDefault());
             gridDiv.addEventListener("mouseover", (e) => {
                 if (mouseDown) {
-                    gridDiv.classList.toggle("active");
+                    colorPickerFunction(e);
                 }
             })
 
@@ -34,11 +46,19 @@ function createGrid(gridCol) {
         }
     }
 }
-createGrid(Number(gridSize?.value));
-gridSize?.addEventListener("input", () => {
-    createGrid(Number(gridSize.value));
-});
-clearGrid?.addEventListener("mousedown",() => {
-grid.innerHTML = ''
-createGrid(Number(gridSize.value));
-})
+
+function clearGridFunction() {
+    clearGrid?.addEventListener("mousedown", () => {
+        grid.innerHTML = ''
+        createGrid(Number(gridSize.value));
+    })
+}
+function gridSizeFunction() {
+    createGrid(Number(gridSize?.value));
+    gridSize?.addEventListener("input", () => {
+        createGrid(Number(gridSize.value));
+    });
+}
+
+gridSizeFunction();
+clearGridFunction();
