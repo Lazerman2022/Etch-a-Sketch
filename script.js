@@ -1,6 +1,7 @@
 
 const grid = document.querySelector(".grid");
 const gridSize = document.querySelector("#size")
+const clearGrid = document.querySelector("#clear-grid")
 console.log(gridSize.value)
 let mouseDown = false
 
@@ -33,7 +34,11 @@ function createGrid(gridCol) {
         }
     }
 }
-createGrid(Number(gridSize.value));
-gridSize.addEventListener("input", () => {
+createGrid(Number(gridSize?.value));
+gridSize?.addEventListener("input", () => {
     createGrid(Number(gridSize.value));
 });
+clearGrid?.addEventListener("mousedown",() => {
+grid.innerHTML = ''
+createGrid(Number(gridSize.value));
+})
